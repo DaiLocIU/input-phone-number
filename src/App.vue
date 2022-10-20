@@ -1,15 +1,15 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+ <auth-phone-number></auth-phone-number>
 </template>
 
 <script lang="ts">
+import '@/styles/index.scss';
 import { Options, Vue } from 'vue-class-component';
-import HelloWorld from './components/HelloWorld.vue';
+import AuthPhoneNumber from '@/components/Auth/AuthPhoneNumber.vue';
 
 @Options({
   components: {
-    HelloWorld,
+    AuthPhoneNumber,
   },
 })
 export default class App extends Vue {}
