@@ -25,69 +25,61 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType, ref } from 'vue';
-import EventSystem from '@/types/EventSystem';
-import buildClassName from '@/util/buildClassName';
+<script setup lang="ts">
 
-export default defineComponent({
-  props: {
-    id: String,
-    className: String,
-    value: String,
-    label: String,
-    error: String,
-    success: String,
-    disabled: Boolean,
-    readOnly: Boolean,
-    placeholder: String,
-    autoComplete: String,
-    maxLength: Number,
-    inputMode: {
-      type: String,
-      validator: (val:string) => ['text', 'none', 'tel', 'url', 'email', 'numeric', 'decimal', 'search'].includes(val),
-    },
-    onChange: Function as PropType<(e: EventSystem.ChangeEvent<HTMLInputElement>) => void>,
-    onInput: Function as PropType<(e: EventSystem.FormEvent<HTMLInputElement>) => void>,
-    onKeyPress: Function as PropType<(e: EventSystem.KeyboardEvent<HTMLInputElement>) => void>,
-    onKeyDown: Function as PropType<(e: EventSystem.KeyboardEvent<HTMLInputElement>) => void>,
-    onBlur: Function as PropType<(e: EventSystem.FocusEvent<HTMLInputElement>) => void>,
-    onPaste: Function as PropType<(e: EventSystem.ClipboardEvent<HTMLInputElement>) => void>,
-  },
-  setup(props, b) {
-    console.log('props', props);
-    console.log('b', b);
-    const labelText = ref(props.error || props.success || props.label);
-    const refInput = ref<HTMLInputElement | null>(null);
-    const fullClassName = buildClassName(
-      'input-group',
-      props.value && 'touched',
-      props.error ? 'error' : props.success && 'success',
-      props.disabled && 'disabled',
-      props.readOnly && 'disabled',
-      labelText.value && 'with-label',
-      props.className,
-    );
-    // expose to template and other options API hooks
-    return {
-      labelText,
-      fullClassName,
-      refInput,
-    };
-  },
-  mounted() {
-    try {
-      // if (this.refInput) {
-      //   this.refInput.focus();
-      // }
-      console.log('this.labelText', this.labelText);
-    } catch (e) {
-      console.log('e', e);
-    }
-  },
+import { onMounted, ref, defineProps } from 'vue';
+// eslint-disable-next-line import/named
+import { InputModeEnum } from '@/types/interface';
+import buildClassName from '@/util/buildClassName';
+import EventSystem from '@/types/EventSystem';
+
+export interface TextInputProps {
+  id: string,
+  className: string,
+  value: string,
+  label: string,
+  error: string,
+  success: string,
+  disabled: boolean,
+  readOnly: boolean,
+  placeholder: string,
+  autoComplete: string,
+  maxLength: number,
+  inputMode: InputModeEnum,
+  onChange: (e: EventSystem.ChangeEvent<HTMLInputElement>) => void,
+  onInput: (e: EventSystem.FormEvent<HTMLInputElement>) => void,
+  onKeyPress: (e: EventSystem.KeyboardEvent<HTMLInputElement>) => void,
+  onKeyDown: (e: EventSystem.KeyboardEvent<HTMLInputElement>) => void,
+  onBlur: (e: EventSystem.FocusEvent<HTMLInputElement>) => void,
+  onPaste: (e: EventSystem.ClipboardEvent<HTMLInputElement>) => void,
+}
+// eslint-disable-next-line no-shadow
+const props = defineProps<TextInputProps>();
+const labelText = ref(props.error || props.success || props.label);
+const refInput = ref<HTMLInputElement | null>(null);
+const fullClassName = buildClassName(
+  'input-group',
+  props.value && 'touched',
+  props.error ? 'error' : props.success && 'success',
+  props.disabled && 'disabled',
+  props.readOnly && 'disabled',
+  labelText.value && 'with-label',
+  props.className,
+);
+
+onMounted(() => {
+  try {
+    // if (this.refInput) {
+    //   this.refInput.focus();
+    // }
+    console.log('this.labelText', labelText);
+  } catch (e) {
+    console.log('e', e);
+  }
 });
+
 </script>
-s
+
 <style scoped>
 
 </style>
