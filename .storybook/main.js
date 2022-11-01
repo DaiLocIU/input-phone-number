@@ -6,8 +6,14 @@ module.exports = {
   ],
   "addons": [
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions"
+    {
+      name: '@storybook/addon-essentials',
+      options: {
+        backgrounds: false,
+      }
+    },
+    "@storybook/addon-interactions",
+    "storybook-addon-themes"
   ],
   "framework": "@storybook/vue3",
   webpackFinal: async (config, { configType }) => {
@@ -15,6 +21,11 @@ module.exports = {
       ...config.resolve.alias,
       '@': path.resolve(__dirname, "../src"),
     };
+    config.module.rules.push({
+      test: /\.scss$/,
+      use: ['style-loader', 'css-loader', 'sass-loader'],
+      include: path.resolve(__dirname, '../'),
+    });
 
     return config;
   }

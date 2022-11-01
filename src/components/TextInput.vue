@@ -24,7 +24,6 @@
 
   </div>
 </template>
-
 <script setup lang="ts">
 
 import { onMounted, ref, defineProps } from 'vue';
@@ -34,24 +33,24 @@ import buildClassName from '@/util/buildClassName';
 import EventSystem from '@/types/EventSystem';
 
 export interface TextInputProps {
-  id: string,
-  className: string,
+  id?: string,
+  className?: string,
   value: string,
   label: string,
-  error: string,
-  success: string,
-  disabled: boolean,
-  readOnly: boolean,
-  placeholder: string,
-  autoComplete: string,
-  maxLength: number,
-  inputMode: InputModeEnum,
-  onChange: (e: EventSystem.ChangeEvent<HTMLInputElement>) => void,
-  onInput: (e: EventSystem.FormEvent<HTMLInputElement>) => void,
-  onKeyPress: (e: EventSystem.KeyboardEvent<HTMLInputElement>) => void,
-  onKeyDown: (e: EventSystem.KeyboardEvent<HTMLInputElement>) => void,
-  onBlur: (e: EventSystem.FocusEvent<HTMLInputElement>) => void,
-  onPaste: (e: EventSystem.ClipboardEvent<HTMLInputElement>) => void,
+  error?: string,
+  success?: string,
+  disabled?: boolean,
+  readOnly?: boolean,
+  placeholder?: string,
+  autoComplete?: string,
+  maxLength?: number,
+  inputMode?: InputModeEnum,
+  onChange?: (e: EventSystem.ChangeEvent<HTMLInputElement>) => void,
+  onInput?: (e: EventSystem.FormEvent<HTMLInputElement>) => void,
+  onKeyPress?: (e: EventSystem.KeyboardEvent<HTMLInputElement>) => void,
+  onKeyDown?: (e: EventSystem.KeyboardEvent<HTMLInputElement>) => void,
+  onBlur?: (e: EventSystem.FocusEvent<HTMLInputElement>) => void,
+  onPaste?: (e: EventSystem.ClipboardEvent<HTMLInputElement>) => void,
 }
 // eslint-disable-next-line no-shadow
 const props = defineProps<TextInputProps>();
