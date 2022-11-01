@@ -1,6 +1,6 @@
 import '../src/styles/index.scss';
 import switchTheme from "@/util/switchTheme";
-
+switchTheme('dark');
 // @ts-ignore
 window.top.fnSwitchTheme = switchTheme;
 export const parameters = {

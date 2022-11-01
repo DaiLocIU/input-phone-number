@@ -23,4 +23,5 @@ export const Normal = Template.bind({});
 // @ts-ignore
 Normal.args = {
   label: 'Primary',
+  value: '',
 };
