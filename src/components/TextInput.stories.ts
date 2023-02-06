@@ -1,6 +1,28 @@
 // @ts-ignore
-import TextInput, { TextInputProps } from '@/components/TextInput.vue';
+import TextInput from '@/components/TextInput.vue';
+import EventSystem from '@/types/EventSystem';
+import { InputModeEnum } from '@/types/interface';
 
+interface TextInputProps {
+  id?: string,
+  className?: string,
+  value?: string,
+  label?: string,
+  error?: string,
+  success?: string,
+  disabled?: boolean,
+  readOnly?: boolean,
+  placeholder?: string,
+  autoComplete?: string,
+  maxLength?: number,
+  inputMode?: InputModeEnum,
+  onChange?: (e: EventSystem.ChangeEvent<HTMLInputElement>) => void,
+  onInput?: (e: EventSystem.FormEvent<HTMLInputElement>) => void,
+  onKeyPress?: (e: EventSystem.KeyboardEvent<HTMLInputElement>) => void,
+  onKeyDown?: (e: EventSystem.KeyboardEvent<HTMLInputElement>) => void,
+  onBlur?: (e: EventSystem.FocusEvent<HTMLInputElement>) => void,
+  onPaste?: (e: EventSystem.ClipboardEvent<HTMLInputElement>) => void,
+}
 export default {
   title: 'UIComponent/TextInput',
   component: TextInput,

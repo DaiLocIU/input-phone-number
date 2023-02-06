@@ -1,7 +1,6 @@
 <template>
   <TextInput
     ref="textInput"
-    :id="'input-phone-number'"
     :value="'123'"
     inputMode="tel"
     :label="'input phone number'"
@@ -11,8 +10,7 @@
 
 <script lang="ts">
 import TextInput from '@/components/TextInput.vue';
-import { defineComponent } from 'vue';
-import useFocusTextInput from '@/hooks/useFocusTextInput';
+import { defineComponent, onMounted, shallowRef } from 'vue';
 
 export default defineComponent({
   name: 'AuthPhoneNumber',
@@ -20,7 +18,13 @@ export default defineComponent({
     TextInput,
   },
   setup() {
-    const textInput = useFocusTextInput();
+    const textInput = shallowRef<any>(null);
+    onMounted(() => {
+      // eslint-disable-next-line no-underscore-dangle
+      if (textInput.value) {
+        textInput.value.focus();
+      }
+    });
     return {
       textInput,
     };
