@@ -12,6 +12,13 @@
       @compositionstart="(handleCompositionStart)"
       @compositionupdate="(handleCompositionUpdate)"
       @compositionend="(handleCompositionEnd)"
+      @focus="(handleFocus)"
+      @blur="(handleBlur)"
+      @keydown="(handleKeydown)"
+      @keypress="(handleKeyPress)"
+      @mouseleave="(handleMouseLeave)"
+      @mouseenter="(handleMouseEnter)"
+      @paste="(handlePaste)"
       :placeholder="placeholder"
       :readOnly="readOnly"
       :value="value"
@@ -19,19 +26,17 @@
       type="text"
       v-bind="$attrs"
     />
-
     <label v-if="labelText" :for="id">{{ labelText }}</label>
-
   </div>
 </template>
 <script lang="ts">
-
 import {
   ref, defineComponent, computed, shallowRef,
 } from 'vue';
 import {
   useInput,
-} from '@/hooks/useInput';
+  useFocusedAndHovering,
+} from '@/hooks';
 import buildClassName from '@/util/buildClassName';
 import { UPDATE_MODEL_EVENT, INPUT_EVENT, CHANGE_EVENT } from '@/constant';
 
@@ -70,11 +75,9 @@ export default defineComponent({
     const refInput = shallowRef<HTMLInputElement>();
     // eslint-disable-next-line no-underscore-dangle
     const __ref = computed(() => refInput.value);
-    const focus = async () => {
-      // see: https://github.com/ElemeFE/element/issues/18573
-      // eslint-disable-next-line no-unused-expressions
-      __ref.value?.focus();
-    };
+
+    const focus = () => __ref.value?.focus();
+    const blur = () => __ref.value?.blur();
 
     const handleInput = async (event: Event) => {
       const { value } = event.target as HTMLInputElement;
@@ -97,16 +100,44 @@ export default defineComponent({
       emitCompositionEnd: (event: CompositionEvent) => emit('compositionend', event),
     });
 
+    const {
+      // focused,
+      // hovering,
+      handleFocus,
+      handleBlur,
+      handleMouseLeave,
+      handleMouseEnter,
+      handleKeydown,
+      handleKeyPress,
+      handlePaste,
+    } = useFocusedAndHovering({
+      emitFocus: (event: FocusEvent) => emit('focus', event),
+      emitBlur: (event: FocusEvent) => emit('blur', event),
+      emitMouseLeave: (event: MouseEvent) => emit('mouseleave', event),
+      emitMouseEnter: (event: MouseEvent) => emit('mouseenter', event),
+      emitKeydown: (event: KeyboardEvent) => emit('keydown', event),
+      emitKeyPress: (event: KeyboardEvent) => emit('keypress', event),
+      emitPaste: (event: ClipboardEvent) => emit('paste', event),
+    });
+
     return {
       refInput,
       labelText,
       fullClassName,
       focus,
+      blur,
       handleInput,
       handleChange,
       handleCompositionStart,
       handleCompositionUpdate,
       handleCompositionEnd,
+      handleFocus,
+      handleBlur,
+      handleMouseLeave,
+      handleMouseEnter,
+      handleKeydown,
+      handleKeyPress,
+      handlePaste,
     };
   },
 });
