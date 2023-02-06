@@ -7,18 +7,7 @@
       :disabled="disabled"
       :inputMode="inputMode"
       :maxLength="maxLength"
-      @change="handleChange"
-      @input="handleInput"
-      @compositionstart="(handleCompositionStart)"
-      @compositionupdate="(handleCompositionUpdate)"
-      @compositionend="(handleCompositionEnd)"
-      @focus="(handleFocus)"
-      @blur="(handleBlur)"
-      @keydown="(handleKeydown)"
-      @keypress="(handleKeyPress)"
-      @mouseleave="(handleMouseLeave)"
-      @mouseenter="(handleMouseEnter)"
-      @paste="(handlePaste)"
+      v-on="eventInput"
       :placeholder="placeholder"
       :readOnly="readOnly"
       :value="value"
@@ -38,7 +27,18 @@ import {
   useFocusedAndHovering,
 } from '@/hooks';
 import buildClassName from '@/util/buildClassName';
-import { UPDATE_MODEL_EVENT, INPUT_EVENT, CHANGE_EVENT } from '@/constant';
+import {
+  UPDATE_MODEL_EVENT,
+  INPUT_EVENT,
+  CHANGE_EVENT,
+  FOCUS_EVENT,
+  BLUR_EVEMT,
+  KEYPRESS_EVENT,
+  PASTE_EVENT,
+  KEYDOWN_EVENT,
+  MOUSEENTER_EVENT,
+  MOUSELEAVE_EVENT,
+} from '@/constant';
 
 export default defineComponent({
   name: 'TextInput',
@@ -95,9 +95,9 @@ export default defineComponent({
       handleCompositionUpdate,
       handleCompositionEnd,
     } = useInput((e) => handleInput(e), {
-      emitCompositionStart: (event: CompositionEvent) => emit('compositionstart', event),
-      emitCompositionUpdate: (event: CompositionEvent) => emit('compositionupdate', event),
-      emitCompositionEnd: (event: CompositionEvent) => emit('compositionend', event),
+      emitCompositionStart: (event: CompositionEvent) => emit('iuCompositionstart', event),
+      emitCompositionUpdate: (event: CompositionEvent) => emit('iuCompositionupdate', event),
+      emitCompositionEnd: (event: CompositionEvent) => emit('iuCompositionend', event),
     });
 
     const {
@@ -111,14 +111,29 @@ export default defineComponent({
       handleKeyPress,
       handlePaste,
     } = useFocusedAndHovering({
-      emitFocus: (event: FocusEvent) => emit('focus', event),
-      emitBlur: (event: FocusEvent) => emit('blur', event),
-      emitMouseLeave: (event: MouseEvent) => emit('mouseleave', event),
-      emitMouseEnter: (event: MouseEvent) => emit('mouseenter', event),
-      emitKeydown: (event: KeyboardEvent) => emit('keydown', event),
-      emitKeyPress: (event: KeyboardEvent) => emit('keypress', event),
-      emitPaste: (event: ClipboardEvent) => emit('paste', event),
+      emitFocus: (event: FocusEvent) => emit(FOCUS_EVENT, event),
+      emitBlur: (event: FocusEvent) => emit(BLUR_EVEMT, event),
+      emitMouseLeave: (event: MouseEvent) => emit(MOUSELEAVE_EVENT, event),
+      emitMouseEnter: (event: MouseEvent) => emit(MOUSEENTER_EVENT, event),
+      emitKeydown: (event: KeyboardEvent) => emit(KEYDOWN_EVENT, event),
+      emitKeyPress: (event: KeyboardEvent) => emit(KEYPRESS_EVENT, event),
+      emitPaste: (event: ClipboardEvent) => emit(PASTE_EVENT, event),
     });
+
+    const eventInput = computed(() => ({
+      change: handleChange,
+      input: handleInput,
+      compositionstart: handleCompositionStart,
+      compositionupdate: handleCompositionUpdate,
+      compositionend: handleCompositionEnd,
+      focus: handleFocus,
+      blur: handleBlur,
+      keydown: handleKeydown,
+      keypress: handleKeyPress,
+      mouseleave: handleMouseLeave,
+      mouseenter: handleMouseEnter,
+      paste: handlePaste,
+    }));
 
     return {
       refInput,
@@ -126,18 +141,7 @@ export default defineComponent({
       fullClassName,
       focus,
       blur,
-      handleInput,
-      handleChange,
-      handleCompositionStart,
-      handleCompositionUpdate,
-      handleCompositionEnd,
-      handleFocus,
-      handleBlur,
-      handleMouseLeave,
-      handleMouseEnter,
-      handleKeydown,
-      handleKeyPress,
-      handlePaste,
+      eventInput,
     };
   },
 });

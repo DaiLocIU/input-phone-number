@@ -1,3 +1,10 @@
 export const UPDATE_MODEL_EVENT = 'update:modelValue';
-export const CHANGE_EVENT = 'change';
-export const INPUT_EVENT = 'input';
+export const CHANGE_EVENT = 'iuChange';
+export const INPUT_EVENT = 'iuInput';
+export const KEYPRESS_EVENT = 'iuKeypress';
+export const KEYDOWN_EVENT = 'iuKeydown';
+export const MOUSELEAVE_EVENT = 'iuMouseleave';
+export const MOUSEENTER_EVENT = 'iuMouseenter';
+export const FOCUS_EVENT = 'iuFocus';
+export const BLUR_EVEMT = 'iuBlur';
+export const PASTE_EVENT = 'iuPaste';
