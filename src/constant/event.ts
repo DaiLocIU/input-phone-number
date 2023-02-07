@@ -8,3 +8,6 @@ export const MOUSEENTER_EVENT = 'iuMouseenter';
 export const FOCUS_EVENT = 'iuFocus';
 export const BLUR_EVEMT = 'iuBlur';
 export const PASTE_EVENT = 'iuPaste';
+export const COMPOSITIONSTART_EVENT = 'iuCompositionstart';
+export const COMPOSITIONUPDATE_EVENT = 'iuCompositionupdate';
+export const COMPOSITIONEND_EVENT = 'iuCompositionend';

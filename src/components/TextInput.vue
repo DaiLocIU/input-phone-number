@@ -38,6 +38,9 @@ import {
   KEYDOWN_EVENT,
   MOUSEENTER_EVENT,
   MOUSELEAVE_EVENT,
+  COMPOSITIONSTART_EVENT,
+  COMPOSITIONUPDATE_EVENT,
+  COMPOSITIONEND_EVENT,
 } from '@/constant';
 
 export default defineComponent({
@@ -95,9 +98,9 @@ export default defineComponent({
       handleCompositionUpdate,
       handleCompositionEnd,
     } = useInput((e) => handleInput(e), {
-      emitCompositionStart: (event: CompositionEvent) => emit('iuCompositionstart', event),
-      emitCompositionUpdate: (event: CompositionEvent) => emit('iuCompositionupdate', event),
-      emitCompositionEnd: (event: CompositionEvent) => emit('iuCompositionend', event),
+      emitCompositionStart: (event: CompositionEvent) => emit(COMPOSITIONSTART_EVENT, event),
+      emitCompositionUpdate: (event: CompositionEvent) => emit(COMPOSITIONUPDATE_EVENT, event),
+      emitCompositionEnd: (event: CompositionEvent) => emit(COMPOSITIONEND_EVENT, event),
     });
 
     const {
